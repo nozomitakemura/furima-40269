@@ -6,7 +6,7 @@
 | ------------------ | ------ | -----------------------------------  |
 | nick_name          | string | null: false                          |
 | email              | string | null: false, unique: true            |
-| encrypted_password | string | null: false, default:""              |
+| encrypted_password | string | null: false,                         |
 | first_name         | string | null: false                          |
 | family_name        | string | null: false                          |
 | first_name_kana    | string | null: false                          |
@@ -31,13 +31,13 @@
 | contribution_id      | integer    | null: false                    |
 | prefecture_id        | integer    | null: false                    |
 | delivery_time_id     | integer    | null: false                    |
-| price                | references | null: false                    |
+| price                | integer    | null: false                    |
 
 
 ### Association
 
 - belongs_to :user
-- hus_one :order
+- has_one :order
 
 ## orders テーブル
 
@@ -59,7 +59,7 @@
 | prefecture_id    | integer    | null: false                    |
 | municipalities   | string     | null: false                    |
 | block            | string     | null: false                    |
-| building_name    | text       |                                |
+| building_name    | string     |                                |
 | phone_number     | string     | null: false                    |
 
 ### Association
