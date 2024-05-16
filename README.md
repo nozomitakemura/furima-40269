@@ -5,7 +5,7 @@
 | Column             | Type   | Options                              |
 | ------------------ | ------ | -----------------------------------  |
 | nick_name          | string | null: false                          |
-| email              | string | null: false, unique: true, default:""|
+| email              | string | null: false, unique: true            |
 | encrypted_password | string | null: false, default:""              |
 | first_name         | string | null: false                          |
 | family_name        | string | null: false                          |
@@ -23,13 +23,14 @@
 
 | Column               | Type       | Options                        |
 | -------------------- | ---------- | ----------                     |
-| user_id              | reference  | null: false, foreign_key: true |
+| user                 | references | null: false, foreign_key: true |
 | product_name         | string     | null: false                    |
-| product_explanation  | string     | null: false                    |
+| product_explanation  | text       | null: false                    |
 | category_id          | integer    | null: false                    |
+| condition_id         | integer    | null: false                    |
 | contribution_id      | integer    | null: false                    |
 | prefecture_id        | integer    | null: false                    |
-| day_id               | integer    | null: false                    |
+| delivery_time_id     | integer    | null: false                    |
 | price                | references | null: false                    |
 
 
@@ -42,8 +43,8 @@
 
 | Column      | Type       | Options                        |
 | ----------- | ---------- | ------------------------------ |
-| user_id     | integer    | null: false, foreign_key: true |
-| item_id     | integer    | null: false, foreign_key: true |
+| user        | references | null: false, foreign_key: true |
+| item        | references | null: false, foreign_key: true |
 
 ### Association
 - belongs_to :item
@@ -53,12 +54,12 @@
 ## addresses テーブル
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | ------------------------------ |
-| order_id         | references | null: false, foreign_key: true |
+| order            | references | null: false, foreign_key: true |
 | postcode         | string     | null: false                    |
 | prefecture_id    | integer    | null: false                    |
 | municipalities   | string     | null: false                    |
 | block            | string     | null: false                    |
-| building_name    | references |                                |
+| building_name    | text       |                                |
 | phone_number     | string     | null: false                    |
 
 ### Association
