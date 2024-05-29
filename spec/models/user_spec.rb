@@ -12,6 +12,7 @@ RSpec.describe User, type: :model do
         expect(@user).to be_valid
       end
     end
+
     context '新規登録できないとき' do
       it 'nicknameが空では登録できない' do
         user = FactoryBot.build(:user) # Userのインスタンス生成
@@ -27,26 +28,26 @@ RSpec.describe User, type: :model do
         expect(user.errors.full_messages).to include "Email can't be blank"
       end
 
-      #
-      #     it '重複したemailが存在する場合は登録できない。' do
-      #       FactoryBot.create(:user, email: 'test@example.com')
-      #       user = FactoryBot.build(:user, email: 'test@example.com')
-      #       user.valid?
-      #       expect(user.errors.full_messages).to include "Email has already been taken"
-      #     end
-      #     it 'emailは@を含まないと登録できない。' do
-      #       user = FactoryBot.build(:user, email: 'testexample.com')
-      #       user.valid?
-      #       expect(user.errors.full_messages).to include "Email is invalid"
-      #     end
-      #
-      # =
+      it '重複したemailが存在する場合は登録できない。' do
+        FactoryBot.create(:user, email: 'test@example.com')
+        user = FactoryBot.build(:user, email: 'test@example.com')
+        user.valid?
+        expect(user.errors.full_messages).to include 'Email has already been taken'
+      end
+
+      it 'emailは@を含まないと登録できない。' do
+        user = FactoryBot.build(:user, email: 'testexample.com')
+        user.valid?
+        expect(user.errors.full_messages).to include 'Email is invalid'
+      end
+
       it 'passwordが空では登録できない' do
         user = FactoryBot.build(:user)
         user.password = ''
         user.valid?
         expect(user.errors.full_messages).to include "Password can't be blank"
       end
+
       it 'passwordが5文字以下では登録できない' do
         user = FactoryBot.build(:user)
         user.password = 'abc12'
@@ -54,6 +55,7 @@ RSpec.describe User, type: :model do
         user.valid?
         expect(user.errors.full_messages).to include 'Password is too short (minimum is 6 characters)'
       end
+
       it 'passwordが半角英数字混合での入力でない場合は登録できない' do
         user = FactoryBot.build(:user)
         user.password = 'password'
@@ -61,6 +63,7 @@ RSpec.describe User, type: :model do
         user.valid?
         expect(user.errors.full_messages).to include 'Password は半角英数字混合で入力してください'
       end
+
       it 'passwordとpassword_confirmationが不一致では登録できない' do
         user = FactoryBot.build(:user)
         user.password = 'password1'
