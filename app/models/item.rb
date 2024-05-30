@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
-
 belongs_to :user
+has_one_attached :image
 #has_one :order(orderモデル追加後記述)
 
 
