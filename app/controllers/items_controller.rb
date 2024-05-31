@@ -6,9 +6,9 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all
-      if @items.empty?
-        @items = [OpenStruct.new(name: "ダミー商品", price: 0, shipping_fee: "無料", image_url: "dummy_image_url", sold: false)]
-      end
+    return unless @items.empty?
+
+    @items = [OpenStruct.new(name: 'ダミー商品', price: 0, shipping_fee: '無料', image_url: 'dummy_image_url', sold: false)]
   end
 
   def create
