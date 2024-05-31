@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   end
 
   def index
-    @items = Item.all
+    #@items = Item.all(実装時に記述)
   end
 
   def create

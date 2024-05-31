@@ -12,6 +12,12 @@ RSpec.describe Item, type: :model do
       end
     end
     context '出品できない場合' do
+      it 'userが紐付いていなければ出品できない' do
+        @item = Item.new(product_name: 'test', product_explanation: 'test', category_id: 2, condition_id: 2, contribution_id:2, prefecture_id: 2, delivery_time_id: 2, price: 600)
+        @item.image.attach(io: File.open(Rails.root.join('spec/fixtures/test.jpg')), filename: 'test.jpg', content_type: 'image/jpeg')
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
+      end
       it 'imageが空では出品できない' do
         @item.image = nil
         @item.valid?
@@ -20,7 +26,7 @@ RSpec.describe Item, type: :model do
       it 'product_nameが空では登録できない' do
         @item.product_name = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include "Product name can't be blank"
+        expect(@item.errors.full_messages).to include("Product name can't be blank")
       end
       it 'product_explanationが空では出品できない' do
         @item.product_explanation = ''
@@ -73,8 +79,14 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
       end
 
-      it 'priceが整数以外の場合は出品できない' do
+      it 'priceが数値以外の場合は出品できない' do
         @item.price = 'abc'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is not a number')
+      end
+
+      it 'priceが全角の場合は出品できない' do
+        @item.price = '２３４'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is not a number')
       end
