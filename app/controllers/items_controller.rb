@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :index]
-
   def new
     @item = Item.new
   end
@@ -14,7 +13,6 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to items_path(@item)
     else
-      # logger.debug @item.errors.inspect
       render 'new', status: :unprocessable_entity, locals: { item: @item }
     end
   end
