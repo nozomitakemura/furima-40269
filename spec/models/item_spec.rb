@@ -13,8 +13,10 @@ RSpec.describe Item, type: :model do
     end
     context '出品できない場合' do
       it 'userが紐付いていなければ出品できない' do
-        @item = Item.new(product_name: 'test', product_explanation: 'test', category_id: 2, condition_id: 2, contribution_id:2, prefecture_id: 2, delivery_time_id: 2, price: 600)
-        @item.image.attach(io: File.open(Rails.root.join('spec/fixtures/test.jpg')), filename: 'test.jpg', content_type: 'image/jpeg')
+        @item = Item.new(product_name: 'test', product_explanation: 'test', category_id: 2, condition_id: 2, contribution_id: 2,
+                         prefecture_id: 2, delivery_time_id: 2, price: 600)
+        @item.image.attach(io: File.open(Rails.root.join('spec/fixtures/test.jpg')), filename: 'test.jpg',
+                           content_type: 'image/jpeg')
         @item.valid?
         expect(@item.errors.full_messages).to include('User must exist')
       end
