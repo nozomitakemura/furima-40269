@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  # has_many :items (itemモデル追加後記述)
+  has_many :items
   # has_many :orders(orderモデル追加後記述)
 
   validates :nick_name, presence: true
