@@ -127,26 +127,39 @@
       新規投稿商品
     </div>
     <ul class='item-lists'>
-
       <%# 商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
+      <% @items.each do |item| %>
       <li class='list'>
-        <%= link_to "#" do %>
+        <%#= link_to "#" do %>
+        <%= link_to items_path(item) do %>
         <div class='item-img-content'>
+           <% if item.image.attached? %>
+           <%= image_tag item.image.variant(resize: "185x185"), class: "item-img" %>
+            <% else %>
           <%= image_tag "item-sample.png", class: "item-img" %>
-
+          <% end %>
           <%# 商品が売れていればsold outを表示しましょう %>
-          <div class='sold-out'>
+<% 
+=begin
+%>          
+          <% if item.sold_out? %>
+           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
+           <% end %>
+<%
+=end
+%>
           <%# //商品が売れていればsold outを表示しましょう %>
-
         </div>
         <div class='item-info'>
           <h3 class='item-name'>
             <%= "商品名" %>
           </h3>
           <div class='item-price'>
+
             <span><%= "販売価格" %>円<br><%= '配送料負担' %></span>
+          
             <div class='star-btn'>
               <%= image_tag "star.png", class:"star-icon" %>
               <span class='star-count'>0</span>
@@ -155,6 +168,7 @@
         </div>
         <% end %>
       </li>
+      <% end %>
       <%# //商品のインスタンス変数になにか入っている場合、中身のすべてを展開できるようにしましょう %>
 
       <%# 商品がない場合は以下のダミー商品が表示されるようにしましょう %>
