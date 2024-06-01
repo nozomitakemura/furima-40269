@@ -3,9 +3,12 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update]
   before_action :correct_user, only: [:edit, :update]
 
+  # before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
+  # before_action :set_item, only: [:show, :edit, :update, :destroy]
+  # before_action :correct_user, only: [:edit, :update, :destroy]
+
   def new
     @item = Item.new
-    set_collections
   end
 
   def index
@@ -35,14 +38,12 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    set_collections
   end
 
   def update
     if @item.update(item_params)
       redirect_to item_path(@item)
     else
-      set_collections
       render :edit, status: :unprocessable_entity
     end
   end
@@ -57,14 +58,6 @@ class ItemsController < ApplicationController
     return if @item.user == current_user
 
     redirect_to root_path
-  end
-
-  def set_collections
-    @categories = Category.all
-    @conditions = Condition.all
-    @contributions = Contribution.all
-    @prefectures = Prefecture.all
-    @delivery_times = DeliveryTime.all
   end
 
   def item_params
