@@ -1,6 +1,3 @@
-<% #実装時に記述
-=begin
-%>
 <%# cssは商品出品のものを併用しています。
 app/assets/stylesheets/items/new.css %>
 
@@ -10,10 +7,39 @@ app/assets/stylesheets/items/new.css %>
   </header>
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
-    <%= form_with local: true do |f| %>
+    <%= form_with(model: @item, url: item_path(@item), local: true) do |f| %>
 
     <%# インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
-    <%# render 'shared/error_messages', model: f.object %>
+    <% if @item.errors.any? %>
+
+      <%= render 'shared/error_messages', model: f.object %>
+      <%#= debug @item.errors %>
+
+      <% end %>
+
+      
+
+<% 
+=begin
+%>
+<div id="error_explanation" class="error-message">
+    <h2><%= pluralize(@item.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <ul>
+      <% @item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+
+
+      <% end %>
+       </ul>
+  </div>
+          <%
+=end
+
+%>
+   
+
+  <%#= render 'shared/error_messages', model: f.object %>
+
     <%# //インスタンスを渡して、エラー発生時にメッセージが表示されるようにしましょう。%>
 
     <%# 商品画像 %>
@@ -55,12 +81,12 @@ app/assets/stylesheets/items/new.css %>
           カテゴリー
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:hoge, [], :hoge, :hoge, {}, {class:"select-box", id:"item-category"}) %>
+        <%= f.collection_select(:category_id, @categories , :id, :name, {prompt: '選択してください' }, {class:"select-box", id:"item-category"}) %>
         <div class="weight-bold-text">
           商品の状態
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:hoge, [], :hoge, :hoge, {}, {class:"select-box", id:"item-sales-status"}) %>
+        <%= f.collection_select(:condition_id, @conditions, :id, :name, {prompt: '選択してください' }, {class:"select-box", id:"item-sales-status"}) %>
       </div>
     </div>
     <%# /商品の詳細 %>
@@ -76,17 +102,17 @@ app/assets/stylesheets/items/new.css %>
           配送料の負担
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:hoge, [], :hoge, :hoge, {}, {class:"select-box", id:"item-shipping-fee-status"}) %>
+        <%= f.collection_select(:contribution_id, @contributions, :id, :name, {prompt: '選択してください' }, {class:"select-box", id:"item-shipping-fee-status"}) %>
         <div class="weight-bold-text">
           発送元の地域
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:hoge, [], :hoge, :hoge, {}, {class:"select-box", id:"item-prefecture"}) %>
+        <%= f.collection_select(:prefecture_id, @prefectures, :id, :name, {prompt: '選択してください' }, {class:"select-box", id:"item-prefecture"}) %>
         <div class="weight-bold-text">
           発送までの日数
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:hoge, [], :hoge, :hoge, {}, {class:"select-box", id:"item-scheduled-delivery"}) %>
+        <%= f.collection_select(:delivery_time_id, @delivery_times, :id, :name, {prompt: '選択してください' }, {class:"select-box", id:"item-scheduled-delivery"}) %>
       </div>
     </div>
     <%# /配送について %>
@@ -104,7 +130,7 @@ app/assets/stylesheets/items/new.css %>
             <span class="indispensable">必須</span>
           </div>
           <span class="sell-yen">¥</span>
-          <%= f.text_field :hoge, class:"price-input", id:"item-price", placeholder:"例）300" %>
+          <%= f.text_field :price, class:"price-input", id:"item-price", placeholder:"例）300" %>
         </div>
         <div class="price-content">
           <span>販売手数料 (10%)</span>
@@ -144,7 +170,7 @@ app/assets/stylesheets/items/new.css %>
     <%# 下部ボタン %>
     <div class="sell-btn-contents">
       <%= f.submit "変更する" ,class:"sell-btn" %>
-      <%=link_to 'もどる', "#", class:"back-btn" %>
+      <%=link_to 'もどる', item_path(@item), class:"back-btn" %>
     </div>
     <%# /下部ボタン %>
   </div>
