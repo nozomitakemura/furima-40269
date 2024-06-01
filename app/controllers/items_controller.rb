@@ -1,11 +1,14 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :index]
+  before_action :authenticate_user!, only: [:new]
   def new
     @item = Item.new
   end
 
   def index
-    # @items = Item.all(実装時に記述)
+    @items = Item.order(created_at: :desc)
+    if @items.empty?
+    @items = [OpenStruct.new(name: 'ダミー商品', price: 0, shipping_fee: '無料', image_url: 'dummy_image_url', sold: false)]
+    end
   end
 
   def create
@@ -15,6 +18,10 @@ class ItemsController < ApplicationController
     else
       render 'new', status: :unprocessable_entity, locals: { item: @item }
     end
+  end
+
+  def show
+    @item = Item.find(params[:id])
   end
 
   private
