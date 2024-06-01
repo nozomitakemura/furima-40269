@@ -27,21 +27,21 @@ class ItemsController < ApplicationController
   def edit
     if user_signed_in?
       @item = Item.find(params[:id])
-    if @item.user == current_user
-      @categories = Category.all
-      @conditions = Condition.all
-      @contributions = Contribution.all
-      @prefectures = Prefecture.all
-      @delivery_times = DeliveryTime.all
-     else
-      redirect_to root_path
+      if @item.user == current_user
+        @categories = Category.all
+        @conditions = Condition.all
+        @contributions = Contribution.all
+        @prefectures = Prefecture.all
+        @delivery_times = DeliveryTime.all
+      else
+        redirect_to root_path
       end
 
-      else
-        redirect_to new_user_session_path
-      end
+    else
+      redirect_to new_user_session_path
     end
-      
+  end
+
   def update
     @item = Item.find(params[:id])
     if @item.update(item_params)
