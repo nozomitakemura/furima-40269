@@ -24,6 +24,50 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
+  def edit
+    if user_signed_in?
+    @item = Item.find(params[:id])
+    if @item.user == current_user
+    @categories = Category.all
+    @conditions = Condition.all
+    @contributions = Contribution.all
+    @prefectures = Prefecture.all
+    @delivery_times = DeliveryTime.all
+  else
+    redirect_to root_path
+  end
+else
+  redirect_to new_user_session_path
+  end
+end
+  
+  def update
+    # puts "@item: #{@item.inspect}"
+    # puts "Item ID from params: #{params[:id]}"
+   
+
+    @item = Item.find(params[:id])
+
+
+
+    # if @item.nil?
+    #   flash[:error] = "Item not found"
+    #   redirect_to root_path
+    #   return
+    # end
+
+    if @item.update(item_params)
+      redirect_to item_path(@item)
+    else
+      @categories = Category.all
+      @conditions = Condition.all
+      @contributions = Contribution.all
+      @prefectures = Prefecture.all
+      @delivery_times = DeliveryTime.all
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def item_params
