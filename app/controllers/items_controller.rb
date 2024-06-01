@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new,:edit,:update]
+  before_action :authenticate_user!, only: [:new, :edit, :update]
   before_action :set_item, only: [:show, :edit, :update]
   before_action :correct_user, only: [:edit, :update]
-  
+
   def new
     @item = Item.new
     set_collections
@@ -11,6 +11,7 @@ class ItemsController < ApplicationController
   def index
     @items = Item.order(created_at: :desc)
     return unless @items.empty?
+
     @items = [OpenStruct.new(name: 'ダミー商品', price: 0, shipping_fee: '無料', image_url: 'dummy_image_url', sold: false)]
   end
 
@@ -27,18 +28,17 @@ class ItemsController < ApplicationController
   end
 
   def edit
-
-      # @item = Item.find(params[:id])
-      # if @item.user == current_user
-      #   @categories = Category.all
-      #   @conditions = Condition.all
-      #   @contributions = Contribution.all
-      #   @prefectures = Prefecture.all
-      #   @delivery_times = DeliveryTime.all
-      # else
-      #   redirect_to root_path
-      # end
-      set_collections
+    # @item = Item.find(params[:id])
+    # if @item.user == current_user
+    #   @categories = Category.all
+    #   @conditions = Condition.all
+    #   @contributions = Contribution.all
+    #   @prefectures = Prefecture.all
+    #   @delivery_times = DeliveryTime.all
+    # else
+    #   redirect_to root_path
+    # end
+    set_collections
   end
 
   def update
@@ -62,9 +62,9 @@ class ItemsController < ApplicationController
   end
 
   def correct_user
-    unless @item.user == current_user
-      redirect_to root_path
-    end
+    return if @item.user == current_user
+
+    redirect_to root_path
   end
 
   def set_collections
