@@ -24,20 +24,17 @@ class ItemsController < ApplicationController
     end
   end
 
+  # def destroy
+  #   @item = Item.find(params[:id])
+  #   item.destroy
+  #   redirect_to root_path
+  # end
+  #削除機能実装用
+
   def show
   end
 
   def edit
-    # @item = Item.find(params[:id])
-    # if @item.user == current_user
-    #   @categories = Category.all
-    #   @conditions = Condition.all
-    #   @contributions = Contribution.all
-    #   @prefectures = Prefecture.all
-    #   @delivery_times = DeliveryTime.all
-    # else
-    #   redirect_to root_path
-    # end
     set_collections
   end
 
@@ -45,11 +42,6 @@ class ItemsController < ApplicationController
     if @item.update(item_params)
       redirect_to item_path(@item)
     else
-      # @categories = Category.all
-      # @conditions = Condition.all
-      # @contributions = Contribution.all
-      # @prefectures = Prefecture.all
-      # @delivery_times = DeliveryTime.all
       set_collections
       render :edit, status: :unprocessable_entity
     end
