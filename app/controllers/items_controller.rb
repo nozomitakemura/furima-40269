@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
   # before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
   # before_action :set_item, only: [:show, :edit, :update, :destroy]
   # before_action :correct_user, only: [:edit, :update, :destroy]
+  #削除機能実装用
 
   def new
     @item = Item.new
@@ -29,7 +30,7 @@ class ItemsController < ApplicationController
 
   # def destroy
   #   @item = Item.find(params[:id])
-  #   item.destroy
+  #   @item.destroy
   #   redirect_to root_path
   # end
   #削除機能実装用

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   root to: 'items#index'
   resources :items, only: [:new, :index, :create, :show, :edit, :update] 
+  # resources :items, only: [:new, :index, :create, :show, :edit, :update, :destroy] #削除機能実装用
   end
 
 
