@@ -6,9 +6,9 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.order(created_at: :desc)
-    if @items.empty?
+    return unless @items.empty?
+
     @items = [OpenStruct.new(name: 'ダミー商品', price: 0, shipping_fee: '無料', image_url: 'dummy_image_url', sold: false)]
-    end
   end
 
   def create
