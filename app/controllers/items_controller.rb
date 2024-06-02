@@ -1,12 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :update]
-  before_action :set_item, only: [:show, :edit, :update]
-  before_action :correct_user, only: [:edit, :update]
 
-  # before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
-  # before_action :set_item, only: [:show, :edit, :update, :destroy]
-  # before_action :correct_user, only: [:edit, :update, :destroy]
-  #削除機能実装用
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def new
     @item = Item.new
@@ -28,12 +24,11 @@ class ItemsController < ApplicationController
     end
   end
 
-  # def destroy
-  #   @item = Item.find(params[:id])
-  #   @item.destroy
-  #   redirect_to root_path
-  # end
-  #削除機能実装用
+  def destroy
+    @item = Item.find(params[:id])
+    @item.destroy
+    redirect_to root_path
+  end
 
   def show
   end
