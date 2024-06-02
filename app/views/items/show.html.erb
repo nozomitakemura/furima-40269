@@ -8,16 +8,13 @@
     <div class="item-img-content">
       <%= image_tag @item.image.variant(resize: "185x185"), class: "item-img" %>
 
-<%
-=begin %> #購入機能実装に記述
       <%# 商品が売れている場合は、sold outを表示しましょう %>
+      <%= link_to "購入画面に進む", "#", data: { turbo: false }, class:"item-red-btn"%>
       <div class="sold-out">
         <span>Sold Out!!</span>
       </div>
       <%# //商品が売れている場合は、sold outを表示しましょう %>
-      <%
-=end %>
-
+     
 
     </div>
     <div class="item-price-box">
