@@ -32,6 +32,12 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @item = Item.find(params[:id])
+    if user_signed_in? && current_user.id == @item.user_id && !@item.purchased?
+      # ユーザーが署名済み、かつ現在のユーザーがアイテムの所有者であり、かつアイテムがまだ購入されていない場合、編集を許可します
+    else
+      redirect_to root_path
+    end
   end
 
   def update
@@ -52,6 +58,10 @@ class ItemsController < ApplicationController
     return if @item.user == current_user
 
     redirect_to root_path
+  end
+
+  def purchased?
+    order.present?
   end
 
   def item_params
