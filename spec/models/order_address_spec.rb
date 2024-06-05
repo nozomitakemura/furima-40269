@@ -2,15 +2,10 @@ require 'rails_helper'
 
 RSpec.describe OrderAddress, type: :model do
   before do
-    # @user = FactoryBot.create(:user)
-    # @item = FactoryBot.create(:item, user: @user)
     @user = FactoryBot.create(:user)
     @item = FactoryBot.create(:item, user: @user)
     @order_address = FactoryBot.build(:order_address, user_id: @user.id, item_id: @item.id, price: @item.price)
     sleep 0.1
-    # @order_address = FactoryBot.build(:order_address, user_id: @user.id, item_id: @item.id)
-    # @order_address = FactoryBot.build(:order_address, user_id: @user.id)
-    # @order_address = FactoryBot.build(:order_address)
   end
   describe '商品購入機能' do
     context '内容に問題ない場合' do
@@ -53,8 +48,18 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
+      it 'phone_numberが空だと保存できないこと' do
+        @order_address.phone_number = ''
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
+      end
       it 'phone_numberが10桁または11桁でないと保存できないこと' do
         @order_address.phone_number = '090123456'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
+      end
+      it 'phone_numberが10桁または11桁でないと保存できないこと' do
+        @order_address.phone_number = '0901234564343434343'
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
@@ -62,6 +67,11 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.user_id = nil
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが紐付いていないと保存できないこと' do
+        @order_address.item_id = nil
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Item can't be blank")
       end
       it 'tokenが空では登録できないこと' do
         @order_address.token = nil
