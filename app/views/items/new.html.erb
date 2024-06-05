@@ -6,13 +6,13 @@
   <div class="items-sell-main">
     <h2 class="items-sell-title">商品の情報を入力</h2>
     <% if @item.errors.any? %>
-  <div id="error_explanation">
-    <div class="alert alert-danger">
-      The form contains <%= pluralize(@item.errors.count, "error") %>.
-    </div>
-    <%= render 'shared/error_messages', model: @item %>
-  </div>
-<% end %>
+      <div id="error_explanation">
+        <div class="alert alert-danger">
+         The form contains <%= pluralize(@item.errors.count, "error") %>.
+        </div>
+       <%= render 'shared/error_messages', model: @item %>
+      </div>
+    <% end %>
    
     <div class="img-upload">
       <div class="weight-bold-text">
@@ -49,12 +49,12 @@
           カテゴリー
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:category_id, Category.all, :id, :name,  {class:"select-box", id:"item-category"}) %>
+        <%= f.collection_select(:category_id, Category.all, :id, :name, {}, {class:"select-box", id:"item-category"}) %>
         <div class="weight-bold-text">
           商品の状態
           <span class="indispensable">必須</span>
         </div>
-        <%= f.collection_select(:condition_id, Condition.all, :id, :name, {class:"select-box", id:"item-sales-status"}) %>
+        <%= f.collection_select(:condition_id, Condition.all, :id, :name,{}, {class:"select-box", id:"item-sales-status"}) %>
       </div>
     </div>
   
