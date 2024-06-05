@@ -4,7 +4,6 @@ class Item < ApplicationRecord
   has_one :order
 
   def purchased?
-    # ロジック実装。たとえば、関連するOrderがあるかどうかで判断：
     !!self.order
   end
 
