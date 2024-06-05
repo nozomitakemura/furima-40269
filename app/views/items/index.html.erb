@@ -123,6 +123,11 @@
         <div class='item-img-content'>
            <% if item.image.present? && item.image.attached? %>
              <%= image_tag item.image.variant(resize: "185x185"), class: "item-img" %>
+              <% if item.purchased? %>
+                <div class='sold-out'>
+                  <span>Sold Out!!</span>
+                <% end %>
+                </div>
              <div class='item-info'>
           <h3 class='item-name'>
             <%= item.product_name %>
@@ -175,6 +180,8 @@
 =end
 %>
  <%# //商品が売れていればsold outを表示しましょう %>
+
+
  
 <%= link_to new_item_path, class: 'purchase-btn' do %>
   <span class='purchase-btn-text'>出品する</span>

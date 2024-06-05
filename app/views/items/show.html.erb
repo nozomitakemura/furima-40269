@@ -8,13 +8,12 @@
     <div class="item-img-content">
       <%= image_tag @item.image.variant(resize: "185x185"), class: "item-img" %>
 
-      <%# 商品が売れている場合は、sold outを表示しましょう %>
-      <%= link_to "購入画面に進む", "#", data: { turbo: false }, class:"item-red-btn"%>
-      <div class="sold-out">
-        <span>Sold Out!!</span>
-      </div>
-      <%# //商品が売れている場合は、sold outを表示しましょう %>
-     
+    <% if @item.purchased? %>
+        <div class='sold-out'>
+          <span>Sold Out!!</span>
+             </div>
+        <% end %>
+
 
     </div>
     <div class="item-price-box">
@@ -26,17 +25,15 @@
       </span>
     </div>
 
-<%#購入機能実装に記述 if user_signed_in? && current_user == @item.user && !@item.sold_out? %>
-<% if user_signed_in? && current_user == @item.user %>
+<% if user_signed_in? && current_user == @item.user && !@item.purchased? %>
 
     <%= link_to "商品の編集", edit_item_path, method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
     <%= link_to "削除", item_path(@item), data: {turbo_method: :delete}, class:"item-destroy" %>  
 
-<%#購入機能実装後に記述  elsif user_signed_in? && current_user != @item.user && !@item.sold_out? %>
-<% elsif user_signed_in? && current_user != @item.user %>
-  
-    <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
+<% elsif user_signed_in? && current_user != @item.user && !@item.purchased? %>
+
+    <%= link_to "購入画面に進む", item_orders_path(@item) , data: { turbo: false }, class:"item-red-btn"%>
     
 <% end %>
     
@@ -93,7 +90,7 @@
       </p>
       <button type="submit" class="comment-btn">
         <%= image_tag "comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>
-        <span>コメントする<span>
+        <span>コメントする</span>
       </button>
     </form>
   </div>
