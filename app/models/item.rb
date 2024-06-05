@@ -4,7 +4,7 @@ class Item < ApplicationRecord
   has_one :order
 
   def purchased?
-    !!self.order
+    !!order
   end
 
   extend ActiveHash::Associations::ActiveRecordExtensions

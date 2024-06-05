@@ -6,7 +6,7 @@ FactoryBot.define do
     block { '1-1' }
     building_name { '東京ハイツ' }
     phone_number { '07056029090' }
-    token {"tok_abcdefghijk00000000000000000"}
-    #association :user # モデルではないので使用できない
+    token { 'tok_abcdefghijk00000000000000000' }
+    # association :user # モデルではないので使用できない
   end
 end
