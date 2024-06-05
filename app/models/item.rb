@@ -1,7 +1,12 @@
 class Item < ApplicationRecord
   belongs_to :user
   has_one_attached :image
-  # has_one :order(orderモデル追加後記述)
+  has_one :order
+
+  def purchased?
+    # ロジック実装。たとえば、関連するOrderがあるかどうかで判断：
+    !!self.order
+  end
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to_active_hash :category
